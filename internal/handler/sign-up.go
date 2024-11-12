@@ -4,22 +4,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
-	bootstrap "vietime-backend/config"
+	config "vietime-backend/config"
 	"vietime-backend/internal/delivery/http/request"
 	"vietime-backend/internal/delivery/http/response"
 	"vietime-backend/internal/entity"
-	usecase "vietime-backend/internal/use-case/sign-up"
 )
-
-type restHandler struct {
-	signUpUsecase usecase.SignupUsecase
-}
-
-func NewHandler(signUpUseCase usecase.SignupUsecase) RestHandler {
-	return &restHandler{
-		signUpUsecase: signUpUseCase,
-	}
-}
 
 // SignUp	godoc
 // SignUp	API
@@ -77,13 +66,13 @@ func (h *restHandler) SignUp(c *gin.Context) {
 		return
 	}
 
-	accessToken, er := h.signUpUsecase.CreateAccessToken(user, &bootstrap.E.AccessTokenSecret, bootstrap.E.AccessTokenExpiryHour)
+	accessToken, er := h.signUpUsecase.CreateAccessToken(user, &config.E.AccessTokenSecret, config.E.AccessTokenExpiryHour)
 	if er != nil {
 		c.JSON(http.StatusInternalServerError, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
-	refreshToken, err := h.signUpUsecase.CreateRefreshToken(user, &bootstrap.E.RefreshTokenSecret, bootstrap.E.RefreshTokenExpiryHour)
+	refreshToken, err := h.signUpUsecase.CreateRefreshToken(user, &config.E.RefreshTokenSecret, config.E.RefreshTokenExpiryHour)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, response.ErrorResponse{Message: err.Error()})
 		return

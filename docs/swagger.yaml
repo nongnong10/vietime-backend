@@ -5,6 +5,13 @@ definitions:
       error:
         type: string
     type: object
+  response.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
   response.SignupResponse:
     properties:
       access_token:
@@ -24,6 +31,42 @@ info:
   title: VietCard Backend API
   version: "1.0"
 paths:
+  /api/login:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Login
+      parameters:
+      - in: formData
+        name: email
+        required: true
+        type: string
+      - in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Login
+      tags:
+      - user
   /api/signup:
     post:
       consumes:

@@ -1,7 +1,7 @@
 package route
 
 import (
-	"vietime-backend/internal/delivery/http/handler"
+	"vietime-backend/internal/handler"
 	userRepo "vietime-backend/internal/repo/user"
 	signupUC "vietime-backend/internal/use-case/sign-up"
 
@@ -43,4 +43,5 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 	swaggerHandler := ginSwagger.WrapHandler(swaggerFiles.Handler)
 	publicRouter.GET("/swagger/*any", swaggerHandler)
 	publicRouter.POST("/api/signup", h.SignUp)
+	publicRouter.POST("/api/login", h.Login)
 }
