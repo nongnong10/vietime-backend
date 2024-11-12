@@ -21,6 +21,20 @@ func NewHandler(signUpUseCase usecase.SignupUsecase) RestHandler {
 	}
 }
 
+// SignUp	godoc
+// SignUp	API
+//
+//	@Summary		Sign Up
+//	@Description	Sign Up
+//	@Tags			user
+//	@Accept			multipart/form-data
+//	@Produce		json
+//	@Router			/api/signup [post]
+//	@Param			signup_request	formData	request.SignupRequest	true	"Sign Up Request"
+//	@Success		200				{object}	response.SignupResponse
+//	@Failure		400				{object}	response.ErrorResponse
+//	@Failure		409				{object}	response.ErrorResponse
+//	@Failure		500				{object}	response.ErrorResponse
 func (h *restHandler) SignUp(c *gin.Context) {
 	var request request.SignupRequest
 

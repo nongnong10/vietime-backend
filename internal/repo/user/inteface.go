@@ -2,16 +2,12 @@ package repository
 
 import (
 	"go.mongodb.org/mongo-driver/mongo"
-	"vietime-backend/internal/delivery/http/request"
 	"vietime-backend/internal/entity"
 )
 
 type UserRepository interface {
 	Create(user *entity.User) (string, error)
 	GetByEmail(email *string) (*entity.User, error)
-	GetByID(id *string) (*entity.User, error)
-	UpdateUser(userID *string, req *request.UpdateUserRequest) (*entity.User, error)
-	UpdateUserXP(user *entity.User) error
 }
 
 type userRepository struct {

@@ -1,4 +1,73 @@
+basePath: /
+definitions:
+  response.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  response.SignupResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
 info:
-  contact: {}
-paths: {}
+  contact:
+    email: hynduf@gmail.com
+    name: API Support
+  description: Backend server for VietCard application
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: VietCard Backend API
+  version: "1.0"
+paths:
+  /api/signup:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Sign Up
+      parameters:
+      - in: formData
+        name: email
+        required: true
+        type: string
+      - in: formData
+        name: name
+        required: true
+        type: string
+      - in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.SignupResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Sign Up
+      tags:
+      - user
+securityDefinitions:
+  ApiKeyAuth:
+    description: Description for what is this security definition being used
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
