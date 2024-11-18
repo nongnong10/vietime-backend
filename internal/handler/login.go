@@ -33,7 +33,7 @@ func (h *restHandler) Login(c *gin.Context) {
 	}
 
 	// 1. Check if user is existed with the given email
-	user, err := h.signUpUsecase.GetUserByEmail(&loginRequest.Email)
+	user, err := h.signUpUseCase.GetUserByEmail(&loginRequest.Email)
 	if user == nil {
 		c.JSON(http.StatusNotFound, response.ErrorResponse{
 			Message: "User is not found with the given email",
@@ -51,13 +51,13 @@ func (h *restHandler) Login(c *gin.Context) {
 	}
 
 	// 3. Generate JWT token
-	accessToken, err := h.signUpUsecase.CreateAccessToken(user, &config.E.AccessTokenSecret, config.E.AccessTokenExpiryHour)
+	accessToken, err := h.signUpUseCase.CreateAccessToken(user, &config.E.AccessTokenSecret, config.E.AccessTokenExpiryHour)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, response.ErrorResponse{
 			Message: "Failed to generate access token",
 		})
 	}
-	refreshToken, err := h.signUpUsecase.CreateRefreshToken(user, &config.E.RefreshTokenSecret, config.E.RefreshTokenExpiryHour)
+	refreshToken, err := h.signUpUseCase.CreateRefreshToken(user, &config.E.RefreshTokenSecret, config.E.RefreshTokenExpiryHour)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, response.ErrorResponse{
 			Message: "Failed to generate refresh token",

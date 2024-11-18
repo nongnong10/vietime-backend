@@ -5,6 +5,6 @@ import (
 	"vietime-backend/pkg/utils"
 )
 
-func (su *signupUsecase) CreateAccessToken(user *entity.User, secret *string, expiry int) (accessToken string, err error) {
+func (su *signUpUseCase) CreateAccessToken(user *entity.User, secret *string, expiry int) (accessToken string, err error) {
 	return utils.CreateAccessToken(user, secret, expiry)
 }

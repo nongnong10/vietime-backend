@@ -2,23 +2,23 @@ package handler
 
 import (
 	"errors"
-	usecase "vietime-backend/internal/use-case/sign-up"
+	signUpUseCase "vietime-backend/internal/use-case/sign-up"
 
 	"github.com/gin-gonic/gin"
 )
 
 type RestHandler interface {
-	SignUp(c *gin.Context)
 	Login(c *gin.Context)
+	SignUp(c *gin.Context)
 }
 
 type restHandler struct {
-	signUpUsecase usecase.SignupUsecase
+	signUpUseCase signUpUseCase.SignUpUseCase
 }
 
-func NewHandler(signUpUseCase usecase.SignupUsecase) RestHandler {
+func NewHandler(signUpUseCase signUpUseCase.SignUpUseCase) RestHandler {
 	return &restHandler{
-		signUpUsecase: signUpUseCase,
+		signUpUseCase: signUpUseCase,
 	}
 }
 

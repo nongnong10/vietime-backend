@@ -33,7 +33,7 @@ func (h *restHandler) SignUp(c *gin.Context) {
 		return
 	}
 
-	user, err := h.signUpUsecase.GetUserByEmail(&request.Email)
+	user, err := h.signUpUseCase.GetUserByEmail(&request.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, response.ErrorResponse{Message: err.Error()})
 		return
@@ -60,19 +60,19 @@ func (h *restHandler) SignUp(c *gin.Context) {
 		HashedPassword: request.Password,
 	}
 
-	_, err = h.signUpUsecase.Create(user)
+	_, err = h.signUpUseCase.Create(user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
-	accessToken, er := h.signUpUsecase.CreateAccessToken(user, &config.E.AccessTokenSecret, config.E.AccessTokenExpiryHour)
+	accessToken, er := h.signUpUseCase.CreateAccessToken(user, &config.E.AccessTokenSecret, config.E.AccessTokenExpiryHour)
 	if er != nil {
 		c.JSON(http.StatusInternalServerError, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
-	refreshToken, err := h.signUpUsecase.CreateRefreshToken(user, &config.E.RefreshTokenSecret, config.E.RefreshTokenExpiryHour)
+	refreshToken, err := h.signUpUseCase.CreateRefreshToken(user, &config.E.RefreshTokenSecret, config.E.RefreshTokenExpiryHour)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, response.ErrorResponse{Message: err.Error()})
 		return

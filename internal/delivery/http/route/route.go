@@ -34,7 +34,7 @@ import (
 func Setup(db *mongo.Database, gin *gin.Engine) {
 	userRP := userRepo.NewUserRepository(db)
 
-	signUpUsecase := signupUC.NewSignupUsecase(userRP)
+	signUpUsecase := signupUC.NewSignUpUseCase(userRP)
 
 	h := handler.NewHandler(signUpUsecase)
 
