@@ -1,23 +1,85 @@
 basePath: /
 definitions:
-  response.ErrorResponse:
+  dto.CreateCardRequest:
+    properties:
+      answer:
+        type: string
+      deck_id:
+        type: string
+      index:
+        type: integer
+      question:
+        type: string
+      question_img_label:
+        type: string
+      question_img_url:
+        type: string
+      wrong_answers:
+        items:
+          type: string
+        type: array
+    required:
+    - answer
+    - deck_id
+    - question
+    - wrong_answers
+    type: object
+  dto.CreateCardResponse:
+    properties:
+      card:
+        $ref: '#/definitions/entity.Card'
+    type: object
+  dto.ErrorResponse:
     properties:
       error:
         type: string
     type: object
-  response.LoginResponse:
+  dto.LoginResponse:
     properties:
       access_token:
         type: string
       refresh_token:
         type: string
     type: object
-  response.SignupResponse:
+  dto.SignupResponse:
     properties:
       access_token:
         type: string
       refresh_token:
         type: string
+    type: object
+  entity.Card:
+    properties:
+      answer:
+        type: string
+      card_type:
+        type: string
+      created_at:
+        type: string
+      deck_id:
+        type: string
+      id:
+        type: string
+      index:
+        type: integer
+      last_review:
+        type: string
+      next_review:
+        type: string
+      num_reviews:
+        type: integer
+      question:
+        type: string
+      question_img_label:
+        type: string
+      question_img_url:
+        type: string
+      user_id:
+        type: string
+      wrong_answers:
+        items:
+          type: string
+        type: array
     type: object
 info:
   contact:
@@ -31,6 +93,34 @@ info:
   title: VietCard Backend API
   version: "1.0"
 paths:
+  /api/card/create:
+    post:
+      consumes:
+      - application/json
+      description: Create New Card
+      parameters:
+      - description: Create Card Request
+        in: body
+        name: create_card_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCardRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CreateCardResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create New Card
+      tags:
+      - card
   /api/login:
     post:
       consumes:
@@ -51,19 +141,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.LoginResponse'
+            $ref: '#/definitions/dto.LoginResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.ErrorResponse'
+            $ref: '#/definitions/dto.ErrorResponse'
         "409":
           description: Conflict
           schema:
-            $ref: '#/definitions/response.ErrorResponse'
+            $ref: '#/definitions/dto.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/response.ErrorResponse'
+            $ref: '#/definitions/dto.ErrorResponse'
       summary: Login
       tags:
       - user
@@ -91,19 +181,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.SignupResponse'
+            $ref: '#/definitions/dto.SignupResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/response.ErrorResponse'
+            $ref: '#/definitions/dto.ErrorResponse'
         "409":
           description: Conflict
           schema:
-            $ref: '#/definitions/response.ErrorResponse'
+            $ref: '#/definitions/dto.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/response.ErrorResponse'
+            $ref: '#/definitions/dto.ErrorResponse'
       summary: Sign Up
       tags:
       - user

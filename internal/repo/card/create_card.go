@@ -7,16 +7,19 @@ import (
 	"vietime-backend/internal/entity"
 )
 
-func (c *cardRepo) CreateCard(card *entity.Card) (string, error) {
-	res, err := c.mongodb.Collection(c.colName).InsertOne(context.TODO(), card)
+func (c *cardRepo) CreateCard(card *entity.Card) (*entity.Card, error) {
+	card.SetDefault()
+	response, err := c.mongodb.Collection(c.colName).InsertOne(context.TODO(), card)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	cardId, ok := res.InsertedID.(primitive.ObjectID)
+	cardId, ok := response.InsertedID.(primitive.ObjectID)
 	if !ok {
-		return "", errors.New("fail to get inserted ID")
+		return nil, errors.New("fail to get inserted ID")
 	}
 
-	return cardId.Hex(), nil
+	card.ID = cardId
+
+	return card, nil
 }

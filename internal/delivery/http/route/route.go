@@ -1,6 +1,8 @@
 package route
 
 import (
+	config "vietime-backend/config"
+	"vietime-backend/internal/delivery/http/middleware"
 	"vietime-backend/internal/handler"
 	userRepo "vietime-backend/internal/repo/user"
 	signupUC "vietime-backend/internal/use-case/sign-up"
@@ -30,7 +32,7 @@ import (
 // @securityDefinitions.apikey	ApiKeyAuth
 // @in							header
 // @name						Authorization
-// @description				Description for what is this security definition being used
+// @description					Description for what is this security definition being used
 func Setup(db *mongo.Database, gin *gin.Engine) {
 	userRP := userRepo.NewUserRepository(db)
 
@@ -44,4 +46,10 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 	publicRouter.GET("/swagger/*any", swaggerHandler)
 	publicRouter.POST("/api/signup", h.SignUp)
 	publicRouter.POST("/api/login", h.Login)
+
+	protectedRouter := gin.Group("")
+	protectedRouter.Use(middleware.JwtAuthMiddleware(config.E.AccessTokenSecret))
+
+	// Card
+	protectedRouter.POST("/api/card/create", h.CreateCard)
 }

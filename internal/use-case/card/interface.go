@@ -1,8 +1,12 @@
 package card
 
-import "vietime-backend/internal/repo/card"
+import (
+	"vietime-backend/internal/entity"
+	"vietime-backend/internal/repo/card"
+)
 
 type CardUseCase interface {
+	CreateCard(card *entity.Card) (*entity.Card, error)
 }
 
 type cardUseCase struct {

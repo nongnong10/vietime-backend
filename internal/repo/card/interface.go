@@ -6,7 +6,7 @@ import (
 )
 
 type CardRepo interface {
-	CreateCard(card *entity.Card) (string, error)
+	CreateCard(card *entity.Card) (*entity.Card, error)
 }
 
 type cardRepo struct {

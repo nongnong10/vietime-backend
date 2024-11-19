@@ -5,8 +5,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	config "vietime-backend/config"
-	"vietime-backend/internal/delivery/http/request"
-	"vietime-backend/internal/delivery/http/response"
+	"vietime-backend/internal/delivery/http/dto"
 )
 
 // Login    godoc
@@ -18,24 +17,24 @@ import (
 //	@Accept			multipart/form-data
 //	@Produce		json
 //	@Router			/api/login [post]
-//	@Param			login_request	formData	request.LoginRequest	true	"Login Request"
-//	@Success		200				{object}	response.LoginResponse
-//	@Failure		400				{object}	response.ErrorResponse
-//	@Failure		409				{object}	response.ErrorResponse
-//	@Failure		500				{object}	response.ErrorResponse
+//	@Param			login_request	formData	dto.LoginRequest	true	"Login Request"
+//	@Success		200				{object}	dto.LoginResponse
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		409				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 func (h *restHandler) Login(c *gin.Context) {
-	var loginRequest request.LoginRequest
+	var loginRequest dto.LoginRequest
 
 	err := c.ShouldBind(&loginRequest)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, response.ErrorResponse{Message: err.Error()})
+		c.JSON(http.StatusBadRequest, dto.ErrorResponse{Message: err.Error()})
 		return
 	}
 
 	// 1. Check if user is existed with the given email
 	user, err := h.signUpUseCase.GetUserByEmail(&loginRequest.Email)
 	if user == nil {
-		c.JSON(http.StatusNotFound, response.ErrorResponse{
+		c.JSON(http.StatusNotFound, dto.ErrorResponse{
 			Message: "User is not found with the given email",
 		})
 		return
@@ -44,7 +43,7 @@ func (h *restHandler) Login(c *gin.Context) {
 	// 2. Check password is correct
 	err = bcrypt.CompareHashAndPassword([]byte(user.HashedPassword), []byte(loginRequest.Password))
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, response.ErrorResponse{
+		c.JSON(http.StatusUnauthorized, dto.ErrorResponse{
 			Message: "Password is incorrect",
 		})
 		return
@@ -53,18 +52,18 @@ func (h *restHandler) Login(c *gin.Context) {
 	// 3. Generate JWT token
 	accessToken, err := h.signUpUseCase.CreateAccessToken(user, &config.E.AccessTokenSecret, config.E.AccessTokenExpiryHour)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, response.ErrorResponse{
+		c.JSON(http.StatusBadRequest, dto.ErrorResponse{
 			Message: "Failed to generate access token",
 		})
 	}
 	refreshToken, err := h.signUpUseCase.CreateRefreshToken(user, &config.E.RefreshTokenSecret, config.E.RefreshTokenExpiryHour)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, response.ErrorResponse{
+		c.JSON(http.StatusBadRequest, dto.ErrorResponse{
 			Message: "Failed to generate refresh token",
 		})
 	}
 
-	loginResponse := response.LoginResponse{
+	loginResponse := dto.LoginResponse{
 		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
 	}
