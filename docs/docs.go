@@ -69,6 +69,57 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/card/update": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update Card Details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "card"
+                ],
+                "summary": "Update Card Details",
+                "parameters": [
+                    {
+                        "description": "Update Card Request",
+                        "name": "update_card_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateCardRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateCardResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/deck/create": {
             "post": {
                 "security": [
@@ -384,6 +435,49 @@ const docTemplate = `{
                 },
                 "refresh_token": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.UpdateCardRequest": {
+            "type": "object",
+            "required": [
+                "card_id"
+            ],
+            "properties": {
+                "answer": {
+                    "type": "string"
+                },
+                "card_id": {
+                    "type": "string"
+                },
+                "deck_id": {
+                    "type": "string"
+                },
+                "question": {
+                    "type": "string"
+                },
+                "question_img_label": {
+                    "type": "string"
+                },
+                "question_img_url": {
+                    "type": "string"
+                },
+                "wrong_answers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "dto.UpdateCardResponse": {
+            "type": "object",
+            "properties": {
+                "card": {
+                    "$ref": "#/definitions/entity.Card"
+                },
+                "success": {
+                    "type": "boolean"
                 }
             }
         },

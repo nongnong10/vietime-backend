@@ -15,7 +15,10 @@ type RestHandler interface {
 	Login(c *gin.Context)
 	SignUp(c *gin.Context)
 	UpdateUser(c *gin.Context)
+
 	CreateCard(ctx *gin.Context)
+	UpdateCard(c *gin.Context)
+
 	CreateDeck(c *gin.Context)
 }
 

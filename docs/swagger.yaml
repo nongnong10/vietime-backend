@@ -68,6 +68,34 @@ definitions:
       refresh_token:
         type: string
     type: object
+  dto.UpdateCardRequest:
+    properties:
+      answer:
+        type: string
+      card_id:
+        type: string
+      deck_id:
+        type: string
+      question:
+        type: string
+      question_img_label:
+        type: string
+      question_img_url:
+        type: string
+      wrong_answers:
+        items:
+          type: string
+        type: array
+    required:
+    - card_id
+    type: object
+  dto.UpdateCardResponse:
+    properties:
+      card:
+        $ref: '#/definitions/entity.Card'
+      success:
+        type: boolean
+    type: object
   dto.UpdateUserRequest:
     properties:
       name:
@@ -217,6 +245,38 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Create New Card
+      tags:
+      - card
+  /api/card/update:
+    put:
+      consumes:
+      - application/json
+      description: Update Card Details
+      parameters:
+      - description: Update Card Request
+        in: body
+        name: update_card_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCardRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UpdateCardResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Card Details
       tags:
       - card
   /api/deck/create:
