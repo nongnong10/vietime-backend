@@ -96,6 +96,48 @@ definitions:
       success:
         type: boolean
     type: object
+  dto.UpdateDeckRequest:
+    properties:
+      cur_new_cards:
+        type: integer
+      cur_review_cards:
+        type: integer
+      deck_id:
+        type: string
+      description:
+        type: string
+      description_img_url:
+        type: string
+      is_favorite:
+        type: boolean
+      is_public:
+        type: boolean
+      last_review:
+        type: string
+      max_new_cards:
+        type: integer
+      max_review_cards:
+        type: integer
+      name:
+        type: string
+      position:
+        type: string
+      rating:
+        type: number
+      total_learned_cards:
+        type: integer
+      views:
+        type: integer
+    required:
+    - deck_id
+    type: object
+  dto.UpdateDeckResponse:
+    properties:
+      deck:
+        $ref: '#/definitions/entity.Deck'
+      success:
+        type: boolean
+    type: object
   dto.UpdateUserRequest:
     properties:
       name:
@@ -305,6 +347,38 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Create New Deck
+      tags:
+      - deck
+  /api/deck/update:
+    put:
+      consumes:
+      - application/json
+      description: Update Deck Details
+      parameters:
+      - description: Update Deck Request
+        in: body
+        name: update_deck_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateDeckRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UpdateDeckResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Deck Details
       tags:
       - deck
   /api/login:

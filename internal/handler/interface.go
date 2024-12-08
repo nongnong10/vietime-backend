@@ -20,6 +20,7 @@ type RestHandler interface {
 	UpdateCard(c *gin.Context)
 
 	CreateDeck(c *gin.Context)
+	UpdateDeck(c *gin.Context)
 }
 
 type restHandler struct {

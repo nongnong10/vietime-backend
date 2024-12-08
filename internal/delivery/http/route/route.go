@@ -67,6 +67,7 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 
 	// Deck
 	protectedRouter.POST("/api/deck/create", h.CreateDeck)
+	protectedRouter.PUT("/api/deck/update", h.UpdateDeck)
 
 	// User
 	protectedRouter.PUT("/api/user/update", h.UpdateUser)

@@ -157,6 +157,57 @@
                 }
             }
         },
+        "/api/deck/update": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update Deck Details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "deck"
+                ],
+                "summary": "Update Deck Details",
+                "parameters": [
+                    {
+                        "description": "Update Deck Request",
+                        "name": "update_deck_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateDeckRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateDeckResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "description": "Login",
@@ -467,6 +518,70 @@
             "properties": {
                 "card": {
                     "$ref": "#/definitions/entity.Card"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "dto.UpdateDeckRequest": {
+            "type": "object",
+            "required": [
+                "deck_id"
+            ],
+            "properties": {
+                "cur_new_cards": {
+                    "type": "integer"
+                },
+                "cur_review_cards": {
+                    "type": "integer"
+                },
+                "deck_id": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "description_img_url": {
+                    "type": "string"
+                },
+                "is_favorite": {
+                    "type": "boolean"
+                },
+                "is_public": {
+                    "type": "boolean"
+                },
+                "last_review": {
+                    "type": "string"
+                },
+                "max_new_cards": {
+                    "type": "integer"
+                },
+                "max_review_cards": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "total_learned_cards": {
+                    "type": "integer"
+                },
+                "views": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.UpdateDeckResponse": {
+            "type": "object",
+            "properties": {
+                "deck": {
+                    "$ref": "#/definitions/entity.Deck"
                 },
                 "success": {
                     "type": "boolean"
