@@ -8,6 +8,7 @@ import (
 type UserRepository interface {
 	Create(user *entity.User) (string, error)
 	GetByEmail(email *string) (*entity.User, error)
+	GetByID(id *string) (*entity.User, error)
 }
 
 type userRepository struct {

@@ -4,8 +4,14 @@ import (
 	config "vietime-backend/config"
 	"vietime-backend/internal/delivery/http/middleware"
 	"vietime-backend/internal/handler"
+	cardRepo "vietime-backend/internal/repo/card"
+	deckRepo "vietime-backend/internal/repo/deck"
 	userRepo "vietime-backend/internal/repo/user"
+
+	cardUC "vietime-backend/internal/use-case/card"
+	deckUC "vietime-backend/internal/use-case/deck"
 	signupUC "vietime-backend/internal/use-case/sign-up"
+	userUC "vietime-backend/internal/use-case/user"
 
 	_ "vietime-backend/docs"
 
@@ -34,11 +40,16 @@ import (
 // @name						Authorization
 // @description					Description for what is this security definition being used
 func Setup(db *mongo.Database, gin *gin.Engine) {
-	userRP := userRepo.NewUserRepository(db)
+	userRepository := userRepo.NewUserRepository(db)
+	cardRepository := cardRepo.NewCardRepository(db)
+	deckRepository := deckRepo.NewDeckRepository(db)
 
-	signUpUsecase := signupUC.NewSignUpUseCase(userRP)
+	signUpUsecase := signupUC.NewSignUpUseCase(userRepository)
+	cardUseCase := cardUC.NewCardUseCase(cardRepository)
+	userUseCase := userUC.NewUserUseCase(userRepository)
+	deckUseCase := deckUC.NewDeckUsecase(deckRepository, userRepository)
 
-	h := handler.NewHandler(signUpUsecase)
+	h := handler.NewHandler(signUpUsecase, cardUseCase, userUseCase, deckUseCase)
 
 	publicRouter := gin.Group("")
 
@@ -52,4 +63,5 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 
 	// Card
 	protectedRouter.POST("/api/card/create", h.CreateCard)
+	protectedRouter.POST("/api/deck/create", h.CreateDeck)
 }

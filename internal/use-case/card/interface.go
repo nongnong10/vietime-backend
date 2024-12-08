@@ -10,10 +10,10 @@ type CardUseCase interface {
 }
 
 type cardUseCase struct {
-	cardRepo card.CardRepo
+	cardRepo card.CardRepository
 }
 
-func NewCardUseCase(cardRepo card.CardRepo) CardUseCase {
+func NewCardUseCase(cardRepo card.CardRepository) CardUseCase {
 	return &cardUseCase{
 		cardRepo: cardRepo,
 	}

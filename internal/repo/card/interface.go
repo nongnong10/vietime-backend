@@ -5,7 +5,7 @@ import (
 	"vietime-backend/internal/entity"
 )
 
-type CardRepo interface {
+type CardRepository interface {
 	CreateCard(card *entity.Card) (*entity.Card, error)
 }
 
@@ -14,7 +14,7 @@ type cardRepo struct {
 	colName string
 }
 
-func NewCardRepo(mongodb *mongo.Database) CardRepo {
+func NewCardRepository(mongodb *mongo.Database) CardRepository {
 	return &cardRepo{
 		mongodb: mongodb,
 		colName: "cards",

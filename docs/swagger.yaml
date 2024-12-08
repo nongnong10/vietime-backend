@@ -29,6 +29,26 @@ definitions:
       card:
         $ref: '#/definitions/entity.Card'
     type: object
+  dto.CreateDeckRequest:
+    properties:
+      description:
+        type: string
+      description_img_url:
+        type: string
+      name:
+        type: string
+      position:
+        type: string
+      total_cards:
+        type: integer
+    required:
+    - name
+    type: object
+  dto.CreateDeckResponse:
+    properties:
+      deck:
+        $ref: '#/definitions/entity.Deck'
+    type: object
   dto.ErrorResponse:
     properties:
       error:
@@ -81,6 +101,45 @@ definitions:
           type: string
         type: array
     type: object
+  entity.Deck:
+    properties:
+      created_at:
+        type: string
+      cur_new_cards:
+        type: integer
+      cur_review_cards:
+        type: integer
+      description:
+        type: string
+      description_img_url:
+        type: string
+      id:
+        type: string
+      is_favorite:
+        type: boolean
+      is_public:
+        type: boolean
+      last_review:
+        type: string
+      max_new_cards:
+        type: integer
+      max_review_cards:
+        type: integer
+      name:
+        type: string
+      position:
+        type: string
+      rating:
+        type: number
+      total_cards:
+        type: integer
+      total_learned_cards:
+        type: integer
+      user_id:
+        type: string
+      views:
+        type: integer
+    type: object
 info:
   contact:
     email: hynduf@gmail.com
@@ -121,6 +180,34 @@ paths:
       summary: Create New Card
       tags:
       - card
+  /api/deck/create:
+    post:
+      consumes:
+      - application/json
+      description: Create New Deck
+      parameters:
+      - description: Create Deck Request
+        in: body
+        name: create_deck_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateDeckRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CreateDeckResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create New Deck
+      tags:
+      - deck
   /api/login:
     post:
       consumes:

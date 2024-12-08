@@ -61,6 +61,51 @@
                 }
             }
         },
+        "/api/deck/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create New Deck",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "deck"
+                ],
+                "summary": "Create New Deck",
+                "parameters": [
+                    {
+                        "description": "Create Deck Request",
+                        "name": "create_deck_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateDeckRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateDeckResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "description": "Login",
@@ -222,6 +267,37 @@
                 }
             }
         },
+        "dto.CreateDeckRequest": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "description_img_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "total_cards": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.CreateDeckResponse": {
+            "type": "object",
+            "properties": {
+                "deck": {
+                    "$ref": "#/definitions/entity.Deck"
+                }
+            }
+        },
         "dto.ErrorResponse": {
             "type": "object",
             "properties": {
@@ -299,6 +375,65 @@
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "entity.Deck": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "cur_new_cards": {
+                    "type": "integer"
+                },
+                "cur_review_cards": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "description_img_url": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_favorite": {
+                    "type": "boolean"
+                },
+                "is_public": {
+                    "type": "boolean"
+                },
+                "last_review": {
+                    "type": "string"
+                },
+                "max_new_cards": {
+                    "type": "integer"
+                },
+                "max_review_cards": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "total_cards": {
+                    "type": "integer"
+                },
+                "total_learned_cards": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "views": {
+                    "type": "integer"
                 }
             }
         }
