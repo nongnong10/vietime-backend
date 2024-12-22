@@ -8,3 +8,8 @@ type CreateFactRequest struct {
 type CreateFactResponse struct {
 	Success bool `json:"success"`
 }
+
+// Get Fact
+type GetFactResponse struct {
+	Fact string `json:"fact"`
+}

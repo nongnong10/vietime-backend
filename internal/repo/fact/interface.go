@@ -7,6 +7,7 @@ import (
 
 type FactRepository interface {
 	CreateFact(fact *entity.Fact) error
+	GetFact() (*entity.Fact, error)
 }
 
 type factRepo struct {

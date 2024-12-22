@@ -557,6 +557,32 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/fact": {
+            "get": {
+                "description": "Get Fact",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "fact"
+                ],
+                "summary": "Get Fact",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetFactResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/fact/create": {
             "post": {
                 "security": [
@@ -1204,6 +1230,14 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/entity.DeckWithCards"
                     }
+                }
+            }
+        },
+        "dto.GetFactResponse": {
+            "type": "object",
+            "properties": {
+                "fact": {
+                    "type": "string"
                 }
             }
         },

@@ -93,4 +93,5 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 
 	// Fact
 	protectedRouter.POST("/api/fact/create", h.CreateFact)
+	publicRouter.GET("/api/fact", h.GetFact)
 }

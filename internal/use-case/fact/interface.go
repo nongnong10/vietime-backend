@@ -7,6 +7,7 @@ import (
 
 type FactUseCase interface {
 	CreateFact(fact *entity.Fact) error
+	GetFact() (*entity.Fact, error)
 }
 
 type factUseCase struct {

@@ -37,6 +37,7 @@ type RestHandler interface {
 	GetDeckWithReviewCards(c *gin.Context)
 
 	CreateFact(c *gin.Context)
+	GetFact(c *gin.Context)
 }
 
 type restHandler struct {
