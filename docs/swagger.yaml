@@ -78,6 +78,18 @@ definitions:
       deck:
         $ref: '#/definitions/entity.Deck'
     type: object
+  dto.CreateFactRequest:
+    properties:
+      content:
+        type: string
+    required:
+    - content
+    type: object
+  dto.CreateFactResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
   dto.DeleteCardRequest:
     properties:
       card_id:
@@ -890,6 +902,34 @@ paths:
       summary: Update View Deck
       tags:
       - deck
+  /api/fact/create:
+    post:
+      consumes:
+      - application/json
+      description: Create New Fact
+      parameters:
+      - description: Create Fact Request
+        in: body
+        name: create_fact_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateFactRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CreateFactResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create New Fact
+      tags:
+      - fact
   /api/get-all:
     post:
       consumes:

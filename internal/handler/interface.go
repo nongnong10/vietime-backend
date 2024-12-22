@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"vietime-backend/internal/use-case/card"
 	"vietime-backend/internal/use-case/deck"
+	"vietime-backend/internal/use-case/fact"
 	sign_up "vietime-backend/internal/use-case/sign-up"
 	"vietime-backend/internal/use-case/user"
 
@@ -34,6 +35,8 @@ type RestHandler interface {
 	CopyDeck(c *gin.Context)
 	DeleteDeck(c *gin.Context)
 	GetDeckWithReviewCards(c *gin.Context)
+
+	CreateFact(c *gin.Context)
 }
 
 type restHandler struct {
@@ -41,6 +44,7 @@ type restHandler struct {
 	cardUseCase   card.CardUseCase
 	userUseCase   user.UserUseCase
 	deckUseCase   deck.DeckUsecase
+	factUseCase   fact.FactUseCase
 }
 
 func NewHandler(
@@ -48,12 +52,14 @@ func NewHandler(
 	cardUseCase card.CardUseCase,
 	userUseCase user.UserUseCase,
 	deckUseCase deck.DeckUsecase,
+	factUseCase fact.FactUseCase,
 ) RestHandler {
 	return &restHandler{
 		signUpUseCase: signUpUseCase,
 		cardUseCase:   cardUseCase,
 		userUseCase:   userUseCase,
 		deckUseCase:   deckUseCase,
+		factUseCase:   factUseCase,
 	}
 }
 

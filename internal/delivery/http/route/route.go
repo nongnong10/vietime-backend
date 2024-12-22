@@ -6,10 +6,12 @@ import (
 	"vietime-backend/internal/handler"
 	cardRepo "vietime-backend/internal/repo/card"
 	deckRepo "vietime-backend/internal/repo/deck"
+	factRepo "vietime-backend/internal/repo/fact"
 	userRepo "vietime-backend/internal/repo/user"
 
 	cardUC "vietime-backend/internal/use-case/card"
 	deckUC "vietime-backend/internal/use-case/deck"
+	factUC "vietime-backend/internal/use-case/fact"
 	signupUC "vietime-backend/internal/use-case/sign-up"
 	userUC "vietime-backend/internal/use-case/user"
 
@@ -43,13 +45,15 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 	userRepository := userRepo.NewUserRepository(db)
 	cardRepository := cardRepo.NewCardRepository(db)
 	deckRepository := deckRepo.NewDeckRepository(db)
+	factRepository := factRepo.NewFactRepository(db)
 
 	signUpUsecase := signupUC.NewSignUpUseCase(userRepository)
 	cardUseCase := cardUC.NewCardUseCase(cardRepository)
 	userUseCase := userUC.NewUserUseCase(userRepository)
 	deckUseCase := deckUC.NewDeckUsecase(deckRepository, userRepository, cardRepository)
+	factUseCase := factUC.NewFactUseCase(factRepository)
 
-	h := handler.NewHandler(signUpUsecase, cardUseCase, userUseCase, deckUseCase)
+	h := handler.NewHandler(signUpUsecase, cardUseCase, userUseCase, deckUseCase, factUseCase)
 
 	publicRouter := gin.Group("")
 
@@ -86,4 +90,7 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 
 	// User
 	protectedRouter.PUT("/api/user/update", h.UpdateUser)
+
+	// Fact
+	protectedRouter.POST("/api/fact/create", h.CreateFact)
 }
