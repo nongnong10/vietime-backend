@@ -11,6 +11,7 @@ type UserRepository interface {
 	GetByEmail(email *string) (*entity.User, error)
 	GetByID(id *string) (*entity.User, error)
 	UpdateUser(userID *string, req *dto.UpdateUserRequest) (*entity.User, error)
+	UpdateUserXP(user *entity.User) error
 }
 
 type userRepository struct {

@@ -12,6 +12,7 @@ type CardRepository interface {
 	GetCardByID(id *string) (*entity.Card, error)
 	GetCardsByDeck(deckID *string) (*[]entity.Card, error)
 	UpdateCard(cardID *string, req *dto.UpdateCardRequest) (*entity.Card, error)
+	UpdateCardReview(card *entity.Card) error
 }
 
 type cardRepo struct {

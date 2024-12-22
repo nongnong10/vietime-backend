@@ -167,6 +167,40 @@ definitions:
       success:
         type: boolean
     type: object
+  dto.UpdateReviewCardsRequest:
+    properties:
+      card_ids:
+        items:
+          type: string
+        type: array
+      deck_id:
+        type: string
+      is_correct:
+        items:
+          type: boolean
+        type: array
+      total_xp:
+        type: integer
+    required:
+    - card_ids
+    - deck_id
+    - is_correct
+    type: object
+  dto.UpdateReviewCardsResponse:
+    properties:
+      cards:
+        items:
+          $ref: '#/definitions/entity.Card'
+        type: array
+      num_blue_cards:
+        type: integer
+      num_green_cards:
+        type: integer
+      num_red_cards:
+        type: integer
+      user:
+        $ref: '#/definitions/entity.User'
+    type: object
   dto.UpdateUserRequest:
     properties:
       name:
@@ -452,6 +486,38 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Create New Card
+      tags:
+      - card
+  /api/card/review:
+    put:
+      consumes:
+      - application/json
+      description: Update Review Cards
+      parameters:
+      - description: Update Review Cards Request
+        in: body
+        name: update_review_cards_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateReviewCardsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UpdateReviewCardsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Review Cards
       tags:
       - card
   /api/card/update:

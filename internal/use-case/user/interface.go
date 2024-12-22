@@ -9,6 +9,7 @@ import (
 type UserUseCase interface {
 	GetUserByID(id *string) (*entity.User, error)
 	UpdateUser(userID *string, req *dto.UpdateUserRequest) (*entity.User, error)
+	AddXPToUser(userID *string, XP int) (*entity.User, error)
 }
 
 type userUseCase struct {

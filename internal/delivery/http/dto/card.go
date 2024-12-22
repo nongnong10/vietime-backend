@@ -45,3 +45,19 @@ type CopyCardToDeckRequest struct {
 type CopyCardToDeckResponse struct {
 	Card entity.Card `json:"card"`
 }
+
+// Update Review Cards
+type UpdateReviewCardsRequest struct {
+	DeckID    primitive.ObjectID   `json:"deck_id" binding:"required"`
+	TotalXP   int                  `json:"total_xp"`
+	CardIDs   []primitive.ObjectID `json:"card_ids" binding:"required"`
+	IsCorrect []bool               `json:"is_correct" binding:"required"`
+}
+
+type UpdateReviewCardsResponse struct {
+	Cards         []entity.Card `json:"cards"`
+	NumBlueCards  int           `json:"num_blue_cards"`
+	NumRedCards   int           `json:"num_red_cards"`
+	NumGreenCards int           `json:"num_green_cards"`
+	User          *entity.User  `json:"user"`
+}

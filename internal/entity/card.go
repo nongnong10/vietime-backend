@@ -2,7 +2,10 @@ package entity
 
 import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"math"
+	"math/rand"
 	"time"
+	timeutils "vietime-backend/pkg/utils/time"
 )
 
 type Card struct {
@@ -32,5 +35,43 @@ func (card *Card) SetDefault() *Card {
 	card.Sm2N = 0
 	card.Sm2EF = 2.5
 	card.Sm2I = 0
+	return card
+}
+
+/*
+ * Reference: https://en.wikipedia.org/wiki/SuperMemo#Description_of_SM-2_algorithm
+ */
+func (card *Card) UpdateScheduleSM2(correct bool) *Card {
+	n := card.Sm2N
+	EF := card.Sm2EF
+	I := card.Sm2I
+	oldI := I
+	if correct {
+		if n == 0 {
+			I = 1
+		} else if n == 1 {
+			I = 4
+		} else {
+			I = int(math.Round(float64(I) * EF))
+		}
+		n++
+		randVal := 2.0 * rand.Float64()
+		EF = EF + (0.1 - randVal*(0.08+randVal*0.02))
+	} else {
+		n = 0
+		I = 1
+		oldI = 0
+		randVal := 3.0 + 2.0*rand.Float64()
+		EF = EF + (0.1 - randVal*(0.08+randVal*0.02))
+	}
+	if EF < 1.3 {
+		EF = 1.3
+	}
+	card.LastReview = timeutils.TruncateToDay(time.Now())
+	card.NextReview = card.LastReview.AddDate(0, 0, oldI)
+	card.Sm2N = n
+	card.Sm2EF = EF
+	card.Sm2I = I
+	card.NumReviews++
 	return card
 }

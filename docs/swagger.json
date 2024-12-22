@@ -112,6 +112,57 @@
                 }
             }
         },
+        "/api/card/review": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update Review Cards",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "card"
+                ],
+                "summary": "Update Review Cards",
+                "parameters": [
+                    {
+                        "description": "Update Review Cards Request",
+                        "name": "update_review_cards_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateReviewCardsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateReviewCardsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/card/update": {
             "put": {
                 "security": [
@@ -772,6 +823,57 @@
                 },
                 "success": {
                     "type": "boolean"
+                }
+            }
+        },
+        "dto.UpdateReviewCardsRequest": {
+            "type": "object",
+            "required": [
+                "card_ids",
+                "deck_id",
+                "is_correct"
+            ],
+            "properties": {
+                "card_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "deck_id": {
+                    "type": "string"
+                },
+                "is_correct": {
+                    "type": "array",
+                    "items": {
+                        "type": "boolean"
+                    }
+                },
+                "total_xp": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.UpdateReviewCardsResponse": {
+            "type": "object",
+            "properties": {
+                "cards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Card"
+                    }
+                },
+                "num_blue_cards": {
+                    "type": "integer"
+                },
+                "num_green_cards": {
+                    "type": "integer"
+                },
+                "num_red_cards": {
+                    "type": "integer"
+                },
+                "user": {
+                    "$ref": "#/definitions/entity.User"
                 }
             }
         },

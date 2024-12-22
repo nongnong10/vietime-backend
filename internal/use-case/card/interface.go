@@ -8,8 +8,14 @@ import (
 
 type CardUseCase interface {
 	CreateCard(card *entity.Card) (*entity.Card, error)
+
 	GetCardByID(id *string) (*entity.Card, error)
+	GetCardsByDeck(deckID *string) (*[]entity.Card, error)
+	GetReviewCardsByDeck(deckID *string, maxNewCards int, maxReviewCards int) (*[]entity.Card, int, int, int, error)
+
 	UpdateCard(cardID *string, req *dto.UpdateCardRequest) (*entity.Card, error)
+	UpdateCardReview(card *entity.Card) error
+
 	CopyCardToDeck(cardID *string, deckID *string) (*entity.Card, error)
 }
 

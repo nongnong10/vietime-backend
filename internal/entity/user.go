@@ -3,6 +3,7 @@ package entity
 import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
+	timeutil "vietime-backend/pkg/utils/time"
 )
 
 const (
@@ -31,5 +32,30 @@ func (user *User) SetDefault() *User {
 	user.Streak = 1
 	user.LastStreak = user.CreatedAt
 	user.IsAdmin = false
+	return user
+}
+
+func (user *User) UpdateLevel() *User {
+	for user.XP >= user.XPToLevelUp {
+		user.Level++
+		user.XP -= user.XPToLevelUp
+		user.XPToLevelUp += LEVEL_XP_INC
+	}
+	return user
+}
+
+func (user *User) UpdateStreak() *User {
+	cur := timeutil.TruncateToDay(time.Now())
+	last := timeutil.TruncateToDay(user.LastStreak)
+	if cur.Equal(last) {
+		return user
+	}
+	ycur := cur.AddDate(0, 0, -1)
+	if ycur.Equal(last) {
+		user.Streak++
+	} else {
+		user.Streak = 1
+	}
+	user.LastStreak = time.Now()
 	return user
 }
