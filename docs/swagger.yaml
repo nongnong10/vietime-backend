@@ -78,6 +78,18 @@ definitions:
       deck:
         $ref: '#/definitions/entity.Deck'
     type: object
+  dto.DeleteCardRequest:
+    properties:
+      card_id:
+        type: string
+    required:
+    - card_id
+    type: object
+  dto.DeleteCardResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
   dto.DeleteDeckRequest:
     properties:
       deck_id:
@@ -587,6 +599,38 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Create New Card
+      tags:
+      - card
+  /api/card/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Card
+      parameters:
+      - description: Delete Card Request
+        in: body
+        name: delete_card_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DeleteCardRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.DeleteCardResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Card
       tags:
       - card
   /api/card/review:

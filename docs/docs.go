@@ -120,6 +120,57 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/card/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete Card",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "card"
+                ],
+                "summary": "Delete Card",
+                "parameters": [
+                    {
+                        "description": "Delete Card Request",
+                        "name": "delete_card_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.DeleteCardRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.DeleteCardResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/card/review": {
             "put": {
                 "security": [
@@ -959,6 +1010,25 @@ const docTemplate = `{
             "properties": {
                 "deck": {
                     "$ref": "#/definitions/entity.Deck"
+                }
+            }
+        },
+        "dto.DeleteCardRequest": {
+            "type": "object",
+            "required": [
+                "card_id"
+            ],
+            "properties": {
+                "card_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.DeleteCardResponse": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
                 }
             }
         },

@@ -17,6 +17,8 @@ type CardUseCase interface {
 	UpdateCardReview(card *entity.Card) error
 
 	CopyCardToDeck(cardID *string, deckID *string) (*entity.Card, error)
+
+	DeleteCard(cardID *string) error
 }
 
 type cardUseCase struct {

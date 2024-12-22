@@ -61,3 +61,12 @@ type UpdateReviewCardsResponse struct {
 	NumGreenCards int           `json:"num_green_cards"`
 	User          *entity.User  `json:"user"`
 }
+
+// Delete Card
+type DeleteCardRequest struct {
+	CardID *primitive.ObjectID `json:"card_id" binding:"required"`
+}
+
+type DeleteCardResponse struct {
+	Success bool `json:"success"`
+}
