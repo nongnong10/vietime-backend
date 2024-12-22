@@ -2,10 +2,19 @@ package dto
 
 import "vietime-backend/internal/entity"
 
+// Login
+
 type LoginRequest struct {
 	Email    string `form:"email" binding:"required,email"`
 	Password string `form:"password" binding:"required"`
 }
+
+type LoginResponse struct {
+	AccessToken  string `json:"access_token"`
+	RefreshToken string `json:"refresh_token"`
+}
+
+// Sign Up
 
 type SignupRequest struct {
 	Name     string `form:"name" binding:"required"`
@@ -13,8 +22,20 @@ type SignupRequest struct {
 	Password string `form:"password" binding:"required"`
 }
 
+type SignupResponse struct {
+	AccessToken  string `json:"access_token"`
+	RefreshToken string `json:"refresh_token"`
+}
+
+// Refresh Token
+
 type RefreshTokenRequest struct {
 	RefreshToken string `json:"refresh_token" binding:"required"`
+}
+
+type RefreshTokenResponse struct {
+	AccessToken  string `json:"access_token"`
+	RefreshToken string `json:"refresh_token"`
 }
 
 // Update User
@@ -32,19 +53,4 @@ type UpdateUserResponse struct {
 
 type ErrorResponse struct {
 	Message string `json:"error"`
-}
-
-type LoginResponse struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token"`
-}
-
-type SignupResponse struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token"`
-}
-
-type RefreshTokenResponse struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token"`
 }

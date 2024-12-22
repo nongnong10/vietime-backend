@@ -90,6 +90,20 @@ definitions:
       refresh_token:
         type: string
     type: object
+  dto.RefreshTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  dto.RefreshTokenResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
   dto.SignupResponse:
     properties:
       access_token:
@@ -703,6 +717,36 @@ paths:
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
       summary: Login
+      tags:
+      - user
+  /api/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Refresh Token
+      parameters:
+      - description: Refresh Token Request
+        in: body
+        name: refresh_token_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RefreshTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.RefreshTokenResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Refresh Token
       tags:
       - user
   /api/signup:

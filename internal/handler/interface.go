@@ -14,6 +14,8 @@ import (
 type RestHandler interface {
 	Login(c *gin.Context)
 	SignUp(c *gin.Context)
+	RefreshToken(c *gin.Context)
+
 	UpdateUser(c *gin.Context)
 
 	CreateCard(ctx *gin.Context)
