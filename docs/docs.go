@@ -511,6 +511,52 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/deck/view": {
+            "put": {
+                "description": "Update View Deck",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "deck"
+                ],
+                "summary": "Update View Deck",
+                "parameters": [
+                    {
+                        "description": "View Deck Request",
+                        "name": "view_deck_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateViewDeckRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/get-all": {
             "post": {
                 "description": "Get All Data",
@@ -1217,6 +1263,14 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.SuccessResponse": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
         "dto.UpdateCardRequest": {
             "type": "object",
             "required": [
@@ -1394,6 +1448,20 @@ const docTemplate = `{
             "properties": {
                 "user": {
                     "$ref": "#/definitions/entity.User"
+                }
+            }
+        },
+        "dto.UpdateViewDeckRequest": {
+            "type": "object",
+            "required": [
+                "deck_id"
+            ],
+            "properties": {
+                "deck_id": {
+                    "type": "string"
+                },
+                "views": {
+                    "type": "integer"
                 }
             }
         },

@@ -210,6 +210,11 @@ definitions:
       refresh_token:
         type: string
     type: object
+  dto.SuccessResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
   dto.UpdateCardRequest:
     properties:
       answer:
@@ -327,6 +332,15 @@ definitions:
     properties:
       user:
         $ref: '#/definitions/entity.User'
+    type: object
+  dto.UpdateViewDeckRequest:
+    properties:
+      deck_id:
+        type: string
+      views:
+        type: integer
+    required:
+    - deck_id
     type: object
   entity.Card:
     properties:
@@ -844,6 +858,36 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Update Deck Details
+      tags:
+      - deck
+  /api/deck/view:
+    put:
+      consumes:
+      - application/json
+      description: Update View Deck
+      parameters:
+      - description: View Deck Request
+        in: body
+        name: view_deck_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateViewDeckRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Update View Deck
       tags:
       - deck
   /api/get-all:

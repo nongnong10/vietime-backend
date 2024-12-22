@@ -44,6 +44,11 @@ type UpdateDeckResponse struct {
 	Deck    entity.Deck `json:"deck"`
 }
 
+type UpdateViewDeckRequest struct {
+	DeckID *primitive.ObjectID `json:"deck_id" bson:"_id,omitempty" binding:"required"`
+	Views  *int                `json:"views" bson:"views,omitempty"`
+}
+
 // Copy Deck
 type CopyDeckRequest struct {
 	DeckID *primitive.ObjectID `json:"deck_id" binding:"required"`
@@ -60,5 +65,10 @@ type DeleteDeckRequest struct {
 }
 
 type DeleteDeckResponse struct {
+	Success bool `json:"success"`
+}
+
+// Success Response
+type SuccessResponse struct {
 	Success bool `json:"success"`
 }
