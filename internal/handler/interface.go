@@ -18,6 +18,7 @@ type RestHandler interface {
 
 	CreateCard(ctx *gin.Context)
 	UpdateCard(c *gin.Context)
+	CopyCardToDeck(c *gin.Context)
 
 	CreateDeck(c *gin.Context)
 	UpdateDeck(c *gin.Context)

@@ -24,6 +24,57 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/card/copy": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Copy Card To Deck",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "card"
+                ],
+                "summary": "Copy Card To Deck",
+                "parameters": [
+                    {
+                        "description": "Copy Card To Deck Request",
+                        "name": "copy_card_to_deck_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CopyCardToDeckRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CopyCardToDeckResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/card/create": {
             "post": {
                 "security": [
@@ -442,6 +493,29 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.CopyCardToDeckRequest": {
+            "type": "object",
+            "required": [
+                "card_id",
+                "deck_id"
+            ],
+            "properties": {
+                "card_id": {
+                    "type": "string"
+                },
+                "deck_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CopyCardToDeckResponse": {
+            "type": "object",
+            "properties": {
+                "card": {
+                    "$ref": "#/definitions/entity.Card"
+                }
+            }
+        },
         "dto.CopyDeckRequest": {
             "type": "object",
             "required": [

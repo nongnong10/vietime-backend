@@ -1,5 +1,20 @@
 basePath: /
 definitions:
+  dto.CopyCardToDeckRequest:
+    properties:
+      card_id:
+        type: string
+      deck_id:
+        type: string
+    required:
+    - card_id
+    - deck_id
+    type: object
+  dto.CopyCardToDeckResponse:
+    properties:
+      card:
+        $ref: '#/definitions/entity.Card'
+    type: object
   dto.CopyDeckRequest:
     properties:
       deck_id:
@@ -379,6 +394,38 @@ info:
   title: VietCard Backend API
   version: "1.0"
 paths:
+  /api/card/copy:
+    post:
+      consumes:
+      - application/json
+      description: Copy Card To Deck
+      parameters:
+      - description: Copy Card To Deck Request
+        in: body
+        name: copy_card_to_deck_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CopyCardToDeckRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CopyCardToDeckResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Copy Card To Deck
+      tags:
+      - card
   /api/card/create:
     post:
       consumes:

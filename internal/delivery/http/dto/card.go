@@ -35,3 +35,13 @@ type UpdateCardResponse struct {
 	Success bool        `json:"success"`
 	Card    entity.Card `json:"card"`
 }
+
+// Copy Card to Deck
+type CopyCardToDeckRequest struct {
+	CardID *primitive.ObjectID `json:"card_id" binding:"required"`
+	DeckID *primitive.ObjectID `json:"deck_id" binding:"required"`
+}
+
+type CopyCardToDeckResponse struct {
+	Card entity.Card `json:"card"`
+}
