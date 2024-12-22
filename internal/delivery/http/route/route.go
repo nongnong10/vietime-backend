@@ -55,11 +55,15 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 
 	swaggerHandler := ginSwagger.WrapHandler(swaggerFiles.Handler)
 	publicRouter.GET("/swagger/*any", swaggerHandler)
+
+	// Login/Signup
 	publicRouter.POST("/api/signup", h.SignUp)
 	publicRouter.POST("/api/login", h.Login)
 	publicRouter.POST("/api/refresh", h.RefreshToken)
 
+	// Mobile
 	publicRouter.POST("/api/login-get-all", h.LogInGetAllData)
+	publicRouter.POST("/api/signup-get-all", h.SignUpGetAllData)
 	publicRouter.POST("/api/get-all", h.GetAllData)
 
 	protectedRouter := gin.Group("")

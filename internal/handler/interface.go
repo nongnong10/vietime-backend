@@ -17,6 +17,7 @@ type RestHandler interface {
 	RefreshToken(c *gin.Context)
 
 	LogInGetAllData(c *gin.Context)
+	SignUpGetAllData(c *gin.Context)
 	GetAllData(c *gin.Context)
 
 	UpdateUser(c *gin.Context)
