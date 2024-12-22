@@ -324,6 +324,57 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/deck/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete Deck",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "deck"
+                ],
+                "summary": "Delete Deck",
+                "parameters": [
+                    {
+                        "description": "Delete Deck Request",
+                        "name": "delete_deck_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.DeleteDeckRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.DeleteDeckResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/deck/review-cards": {
             "get": {
                 "security": [
@@ -908,6 +959,25 @@ const docTemplate = `{
             "properties": {
                 "deck": {
                     "$ref": "#/definitions/entity.Deck"
+                }
+            }
+        },
+        "dto.DeleteDeckRequest": {
+            "type": "object",
+            "required": [
+                "deck_id"
+            ],
+            "properties": {
+                "deck_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.DeleteDeckResponse": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
                 }
             }
         },

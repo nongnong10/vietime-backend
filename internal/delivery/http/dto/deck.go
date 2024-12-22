@@ -53,3 +53,12 @@ type CopyDeckResponse struct {
 	Deck       entity.DeckWithCards       `json:"deck"`
 	DeckReview entity.DeckWithReviewCards `json:"deck_review"`
 }
+
+// Delete Deck
+type DeleteDeckRequest struct {
+	DeckID *primitive.ObjectID `json:"deck_id" binding:"required"`
+}
+
+type DeleteDeckResponse struct {
+	Success bool `json:"success"`
+}
