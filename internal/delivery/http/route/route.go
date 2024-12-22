@@ -47,7 +47,7 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 	signUpUsecase := signupUC.NewSignUpUseCase(userRepository)
 	cardUseCase := cardUC.NewCardUseCase(cardRepository)
 	userUseCase := userUC.NewUserUseCase(userRepository)
-	deckUseCase := deckUC.NewDeckUsecase(deckRepository, userRepository)
+	deckUseCase := deckUC.NewDeckUsecase(deckRepository, userRepository, cardRepository)
 
 	h := handler.NewHandler(signUpUsecase, cardUseCase, userUseCase, deckUseCase)
 
@@ -68,6 +68,7 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 	// Deck
 	protectedRouter.POST("/api/deck/create", h.CreateDeck)
 	protectedRouter.PUT("/api/deck/update", h.UpdateDeck)
+	protectedRouter.POST("/api/deck/copy", h.CopyDeck)
 
 	// User
 	protectedRouter.PUT("/api/user/update", h.UpdateUser)

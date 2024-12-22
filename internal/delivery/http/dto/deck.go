@@ -43,3 +43,13 @@ type UpdateDeckResponse struct {
 	Success bool        `json:"success"`
 	Deck    entity.Deck `json:"deck"`
 }
+
+// Copy Deck
+type CopyDeckRequest struct {
+	DeckID *primitive.ObjectID `json:"deck_id" binding:"required"`
+}
+
+type CopyDeckResponse struct {
+	Deck       entity.DeckWithCards       `json:"deck"`
+	DeckReview entity.DeckWithReviewCards `json:"deck_review"`
+}

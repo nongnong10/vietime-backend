@@ -2,9 +2,9 @@ package usecase
 
 import (
 	"vietime-backend/internal/entity"
-	"vietime-backend/pkg/utils"
+	"vietime-backend/pkg/utils/token"
 )
 
 func (su *signUpUseCase) CreateAccessToken(user *entity.User, secret *string, expiry int) (accessToken string, err error) {
-	return utils.CreateAccessToken(user, secret, expiry)
+	return token.CreateAccessToken(user, secret, expiry)
 }

@@ -120,6 +120,63 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/deck/copy": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Copy Deck",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "deck"
+                ],
+                "summary": "Copy Deck",
+                "parameters": [
+                    {
+                        "description": "Copy Deck Request",
+                        "name": "copy_deck_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CopyDeckRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CopyDeckResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/deck/create": {
             "post": {
                 "security": [
@@ -385,6 +442,28 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.CopyDeckRequest": {
+            "type": "object",
+            "required": [
+                "deck_id"
+            ],
+            "properties": {
+                "deck_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CopyDeckResponse": {
+            "type": "object",
+            "properties": {
+                "deck": {
+                    "$ref": "#/definitions/entity.DeckWithCards"
+                },
+                "deck_review": {
+                    "$ref": "#/definitions/entity.DeckWithReviewCards"
+                }
+            }
+        },
         "dto.CreateCardRequest": {
             "type": "object",
             "required": [
@@ -625,7 +704,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "card_type": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "created_at": {
                     "type": "string"
@@ -656,6 +735,15 @@ const docTemplate = `{
                 },
                 "question_img_url": {
                     "type": "string"
+                },
+                "sm2_ef": {
+                    "type": "number"
+                },
+                "sm2_i": {
+                    "type": "integer"
+                },
+                "sm2_n": {
+                    "type": "integer"
                 },
                 "user_id": {
                     "type": "string"
@@ -706,6 +794,154 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "total_cards": {
+                    "type": "integer"
+                },
+                "total_learned_cards": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "views": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.DeckWithCards": {
+            "type": "object",
+            "properties": {
+                "cards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Card"
+                    }
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "cur_new_cards": {
+                    "type": "integer"
+                },
+                "cur_review_cards": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "description_img_url": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_favorite": {
+                    "type": "boolean"
+                },
+                "is_public": {
+                    "type": "boolean"
+                },
+                "last_review": {
+                    "type": "string"
+                },
+                "max_new_cards": {
+                    "type": "integer"
+                },
+                "max_review_cards": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "num_blue_cards": {
+                    "type": "integer"
+                },
+                "num_green_cards": {
+                    "type": "integer"
+                },
+                "num_red_cards": {
+                    "type": "integer"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "total_cards": {
+                    "type": "integer"
+                },
+                "total_learned_cards": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "views": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.DeckWithReviewCards": {
+            "type": "object",
+            "properties": {
+                "cards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Card"
+                    }
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "cur_new_cards": {
+                    "type": "integer"
+                },
+                "cur_review_cards": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "description_img_url": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_favorite": {
+                    "type": "boolean"
+                },
+                "is_public": {
+                    "type": "boolean"
+                },
+                "last_review": {
+                    "type": "string"
+                },
+                "max_new_cards": {
+                    "type": "integer"
+                },
+                "max_review_cards": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "num_blue_cards": {
+                    "type": "integer"
+                },
+                "num_green_cards": {
+                    "type": "integer"
+                },
+                "num_red_cards": {
+                    "type": "integer"
                 },
                 "position": {
                     "type": "string"

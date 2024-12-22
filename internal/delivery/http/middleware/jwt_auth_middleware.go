@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 	"strings"
-	"vietime-backend/pkg/utils"
+	"vietime-backend/pkg/utils/token"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,9 +18,9 @@ func JwtAuthMiddleware(secret string) gin.HandlerFunc {
 		t := strings.Split(authHeader, " ")
 		if len(t) == 2 {
 			authToken := t[1]
-			authorized, err := utils.IsAuthorized(&authToken, &secret)
+			authorized, err := token.IsAuthorized(&authToken, &secret)
 			if authorized {
-				userID, err := utils.ExtractIDFromToken(&authToken, &secret)
+				userID, err := token.ExtractIDFromToken(&authToken, &secret)
 				if err != nil {
 					c.JSON(http.StatusUnauthorized, ErrorResponse{Message: err.Error()})
 					c.Abort()

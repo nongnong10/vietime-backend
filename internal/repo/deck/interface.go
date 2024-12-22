@@ -9,6 +9,7 @@ import (
 type DeckRepository interface {
 	CreateDeck(deck *entity.Deck) (*entity.Deck, error)
 	GetDeckByID(id *string) (*entity.Deck, error)
+	GetDeckWithCards(deckID *string) (*entity.DeckWithCards, error)
 	UpdateDeck(deckID *string, req *dto.UpdateDeckRequest) (*entity.Deck, error)
 }
 

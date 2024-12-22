@@ -21,6 +21,7 @@ type RestHandler interface {
 
 	CreateDeck(c *gin.Context)
 	UpdateDeck(c *gin.Context)
+	CopyDeck(c *gin.Context)
 }
 
 type restHandler struct {

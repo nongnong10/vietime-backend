@@ -56,7 +56,7 @@ func (h *restHandler) CreateCard(ctx *gin.Context) {
 	card := &entity.Card{
 		UserID:           createCardRequest.UserID,
 		DeckID:           createCardRequest.DeckID,
-		QuestionImgUrl:   createCardRequest.QuestionImgURL,
+		QuestionImgURL:   createCardRequest.QuestionImgURL,
 		QuestionImgLabel: createCardRequest.QuestionImgLabel,
 		Question:         createCardRequest.Question,
 		Answer:           createCardRequest.Answer,

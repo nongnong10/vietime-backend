@@ -1,5 +1,19 @@
 basePath: /
 definitions:
+  dto.CopyDeckRequest:
+    properties:
+      deck_id:
+        type: string
+    required:
+    - deck_id
+    type: object
+  dto.CopyDeckResponse:
+    properties:
+      deck:
+        $ref: '#/definitions/entity.DeckWithCards'
+      deck_review:
+        $ref: '#/definitions/entity.DeckWithReviewCards'
+    type: object
   dto.CreateCardRequest:
     properties:
       answer:
@@ -157,7 +171,7 @@ definitions:
       answer:
         type: string
       card_type:
-        type: string
+        type: integer
       created_at:
         type: string
       deck_id:
@@ -178,6 +192,12 @@ definitions:
         type: string
       question_img_url:
         type: string
+      sm2_ef:
+        type: number
+      sm2_i:
+        type: integer
+      sm2_n:
+        type: integer
       user_id:
         type: string
       wrong_answers:
@@ -211,6 +231,104 @@ definitions:
         type: integer
       name:
         type: string
+      position:
+        type: string
+      rating:
+        type: number
+      total_cards:
+        type: integer
+      total_learned_cards:
+        type: integer
+      user_id:
+        type: string
+      views:
+        type: integer
+    type: object
+  entity.DeckWithCards:
+    properties:
+      cards:
+        items:
+          $ref: '#/definitions/entity.Card'
+        type: array
+      created_at:
+        type: string
+      cur_new_cards:
+        type: integer
+      cur_review_cards:
+        type: integer
+      description:
+        type: string
+      description_img_url:
+        type: string
+      id:
+        type: string
+      is_favorite:
+        type: boolean
+      is_public:
+        type: boolean
+      last_review:
+        type: string
+      max_new_cards:
+        type: integer
+      max_review_cards:
+        type: integer
+      name:
+        type: string
+      num_blue_cards:
+        type: integer
+      num_green_cards:
+        type: integer
+      num_red_cards:
+        type: integer
+      position:
+        type: string
+      rating:
+        type: number
+      total_cards:
+        type: integer
+      total_learned_cards:
+        type: integer
+      user_id:
+        type: string
+      views:
+        type: integer
+    type: object
+  entity.DeckWithReviewCards:
+    properties:
+      cards:
+        items:
+          $ref: '#/definitions/entity.Card'
+        type: array
+      created_at:
+        type: string
+      cur_new_cards:
+        type: integer
+      cur_review_cards:
+        type: integer
+      description:
+        type: string
+      description_img_url:
+        type: string
+      id:
+        type: string
+      is_favorite:
+        type: boolean
+      is_public:
+        type: boolean
+      last_review:
+        type: string
+      max_new_cards:
+        type: integer
+      max_review_cards:
+        type: integer
+      name:
+        type: string
+      num_blue_cards:
+        type: integer
+      num_green_cards:
+        type: integer
+      num_red_cards:
+        type: integer
       position:
         type: string
       rating:
@@ -321,6 +439,42 @@ paths:
       summary: Update Card Details
       tags:
       - card
+  /api/deck/copy:
+    post:
+      consumes:
+      - application/json
+      description: Copy Deck
+      parameters:
+      - description: Copy Deck Request
+        in: body
+        name: copy_deck_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CopyDeckRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CopyDeckResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Copy Deck
+      tags:
+      - deck
   /api/deck/create:
     post:
       consumes:
