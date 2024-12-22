@@ -57,6 +57,7 @@ func Setup(db *mongo.Database, gin *gin.Engine) {
 	publicRouter.GET("/swagger/*any", swaggerHandler)
 	publicRouter.POST("/api/signup", h.SignUp)
 	publicRouter.POST("/api/login", h.Login)
+	publicRouter.POST("/api/login-get-all", h.LogInGetAllData)
 	publicRouter.POST("/api/refresh", h.RefreshToken)
 
 	protectedRouter := gin.Group("")

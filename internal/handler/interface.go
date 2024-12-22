@@ -13,6 +13,7 @@ import (
 
 type RestHandler interface {
 	Login(c *gin.Context)
+	LogInGetAllData(c *gin.Context)
 	SignUp(c *gin.Context)
 	RefreshToken(c *gin.Context)
 

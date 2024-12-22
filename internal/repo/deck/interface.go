@@ -13,6 +13,7 @@ type DeckRepository interface {
 	UpdateDeck(deckID *string, req *dto.UpdateDeckRequest) (*entity.Deck, error)
 
 	GetCardsAllDecksOfUser(userID *string) (*[]entity.DeckWithCards, error)
+	GetCardsAllDecks(userID *string) (*[]entity.DeckWithCards, error)
 }
 
 type deckRepo struct {

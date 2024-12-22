@@ -7,9 +7,7 @@ import (
 	"vietime-backend/internal/entity"
 )
 
-func (dr *deckRepo) GetCardsAllDecks(userID *string) (*[]entity.DeckWithCards, error) {
-	// Requires the MongoDB Go Driver
-	// https://go.mongodb.org/mongo-driver
+func (dr *deckRepo) GetCardsAllDecksOfUser(userID *string) (*[]entity.DeckWithCards, error) {
 	ctx := context.TODO()
 
 	uID, err := primitive.ObjectIDFromHex(*userID)
@@ -20,18 +18,7 @@ func (dr *deckRepo) GetCardsAllDecks(userID *string) (*[]entity.DeckWithCards, e
 	// Open an aggregation cursor
 	coll := dr.db.Collection(dr.colName)
 	cursor, err := coll.Aggregate(ctx, bson.A{
-		bson.D{
-			{"$match",
-				bson.D{
-					{"$or",
-						bson.A{
-							bson.D{{"user_id", uID}},
-							bson.D{{"is_public", true}},
-						},
-					},
-				},
-			},
-		},
+		bson.D{{"$match", bson.D{{"user_id", uID}}}},
 		bson.D{
 			{"$lookup",
 				bson.D{
