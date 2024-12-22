@@ -550,6 +550,27 @@ paths:
       summary: Create New Deck
       tags:
       - deck
+  /api/deck/review-cards:
+    get:
+      description: Get Deck With Review Cards Of Logged In User
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.DeckWithReviewCards'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Deck With Review Cards Of Logged In User
+      tags:
+      - deck
   /api/deck/update:
     put:
       consumes:
