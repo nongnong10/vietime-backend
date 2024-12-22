@@ -401,6 +401,46 @@
                 }
             }
         },
+        "/api/get-all": {
+            "post": {
+                "description": "Get All Data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mobile"
+                ],
+                "summary": "Get All Data",
+                "parameters": [
+                    {
+                        "description": "Refresh Token Request",
+                        "name": "refresh_token_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.RefreshTokenRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetAllDataResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "description": "Login",
@@ -801,6 +841,44 @@
             "properties": {
                 "error": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.GetAllDataResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "all_cards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Card"
+                    }
+                },
+                "decks_review": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.DeckWithReviewCards"
+                    }
+                },
+                "public_decks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.DeckWithCards"
+                    }
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/entity.User"
+                },
+                "user_decks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.DeckWithCards"
+                    }
                 }
             }
         },
