@@ -37,7 +37,7 @@ func (uc *deckUsecase) CopyDeck(userID *string, deckID *string) (*entity.DeckWit
 		(*cards)[i].DeckID = deck.ID
 		(*cards)[i].ID = primitive.NilObjectID
 	}
-	err = uc.cardRepo.CreateManyCards(cards)
+	err = uc.cardRepo.CreateManyCards(*cards)
 	if err != nil {
 		return nil, nil, err
 	}

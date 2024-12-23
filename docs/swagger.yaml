@@ -1,5 +1,26 @@
 basePath: /
 definitions:
+  dto.Card:
+    properties:
+      answer:
+        type: string
+      index:
+        type: integer
+      question:
+        type: string
+      question_img_label:
+        type: string
+      question_img_url:
+        type: string
+      wrong_answers:
+        items:
+          type: string
+        type: array
+    required:
+    - answer
+    - question
+    - wrong_answers
+    type: object
   dto.CopyCardToDeckRequest:
     properties:
       card_id:
@@ -86,6 +107,23 @@ definitions:
     - content
     type: object
   dto.CreateFactResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
+  dto.CreateManyCardsRequest:
+    properties:
+      cards:
+        items:
+          $ref: '#/definitions/dto.Card'
+        type: array
+      deck_id:
+        type: string
+    required:
+    - cards
+    - deck_id
+    type: object
+  dto.CreateManyCardsResponse:
     properties:
       success:
         type: boolean
@@ -630,6 +668,34 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Create New Card
+      tags:
+      - card
+  /api/card/create_list:
+    post:
+      consumes:
+      - application/json
+      description: Create Many Cards
+      parameters:
+      - description: Create List New Cards
+        in: body
+        name: create_card_request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateManyCardsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CreateManyCardsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Many Cards
       tags:
       - card
   /api/card/delete:

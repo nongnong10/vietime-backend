@@ -5,6 +5,7 @@ import (
 	"vietime-backend/internal/entity"
 )
 
+// Create Card
 type CreateCardRequest struct {
 	UserID           primitive.ObjectID `json:"user_id" swaggerignore:"true"`
 	DeckID           primitive.ObjectID `json:"deck_id" binding:"required"`
@@ -18,6 +19,26 @@ type CreateCardRequest struct {
 
 type CreateCardResponse struct {
 	Card entity.Card `json:"card"`
+}
+
+// Create List Cards
+type Card struct {
+	Index            int      `json:"index"`
+	QuestionImgURL   string   `json:"question_img_url"`
+	QuestionImgLabel string   `json:"question_img_label"`
+	Question         string   `json:"question" binding:"required"`
+	Answer           string   `json:"answer" binding:"required"`
+	WrongAnswers     []string `json:"wrong_answers" binding:"required"`
+}
+
+type CreateManyCardsRequest struct {
+	UserID primitive.ObjectID `json:"user_id" swaggerignore:"true"`
+	DeckID primitive.ObjectID `json:"deck_id" binding:"required"`
+	Cards  []Card             `json:"cards" binding:"required"`
+}
+
+type CreateManyCardsResponse struct {
+	Success bool `json:"success"`
 }
 
 // Update Card

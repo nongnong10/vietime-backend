@@ -120,6 +120,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/card/create_list": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create Many Cards",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "card"
+                ],
+                "summary": "Create Many Cards",
+                "parameters": [
+                    {
+                        "description": "Create List New Cards",
+                        "name": "create_card_request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateManyCardsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateManyCardsResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/card/delete": {
             "delete": {
                 "security": [
@@ -1011,6 +1056,37 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.Card": {
+            "type": "object",
+            "required": [
+                "answer",
+                "question",
+                "wrong_answers"
+            ],
+            "properties": {
+                "answer": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "integer"
+                },
+                "question": {
+                    "type": "string"
+                },
+                "question_img_label": {
+                    "type": "string"
+                },
+                "question_img_url": {
+                    "type": "string"
+                },
+                "wrong_answers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "dto.CopyCardToDeckRequest": {
             "type": "object",
             "required": [
@@ -1142,6 +1218,32 @@ const docTemplate = `{
             }
         },
         "dto.CreateFactResponse": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "dto.CreateManyCardsRequest": {
+            "type": "object",
+            "required": [
+                "cards",
+                "deck_id"
+            ],
+            "properties": {
+                "cards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Card"
+                    }
+                },
+                "deck_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateManyCardsResponse": {
             "type": "object",
             "properties": {
                 "success": {
